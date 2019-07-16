@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ChatBot, { Loading } from 'react-simple-chatbot';
 import './App.css';
+import Geoloc from './Geoloc'
 const axios = require('axios');
 
 class DBPedia extends Component {
@@ -89,13 +90,22 @@ DBPedia.defaultProps = {
   triggerNextStep: undefined,
 };
 
+
+
 const ExampleDBPedia = () => (
     <ChatBot
     steps={[
       {
         id: '1',
-        message: 'Bonjour, je suis votre assistent virtuel',
-        trigger: 'search',
+        message: 'Bonjour je suis votre assistant SGMA virtuel,en quoi puis-je vous être utile',
+        trigger: '2',
+      },
+      {
+        id: '2',
+        options: [
+          { value: 1, label: 'Ouvrir un compte', trigger: 'Accueil du client' },
+          { value: 2, label: "Trouver l'agence  SGMA la plus proche", trigger: 'agence' },
+        ],
       },
       {
         id: 'search',
@@ -112,6 +122,16 @@ const ExampleDBPedia = () => (
         id: '4',
         message: `Avez vous d'autre question ? `,
         trigger: 'search',
+      },
+      {
+        id: 'Accueil du client',
+        message: `Nous sommes heureux de vous compter parmi nos nouveaux clients, que voulez vous savoir ? `,
+        trigger: 'search',
+      },
+      {
+        id: 'agence',
+        component: <Geoloc />,
+        trigger: '4',
       },
     ]}
   />

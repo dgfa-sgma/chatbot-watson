@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ChatBot, { Loading } from 'react-simple-chatbot';
+import { ThemeProvider } from 'styled-components';
 import './App.css';
+import avart from './static/img/hector.png'
+import user from './static/img/user.png'
 import Geoloc from './Geoloc'
 const axios = require('axios');
+
 
 class DBPedia extends Component {
   constructor(props) {
@@ -90,21 +94,37 @@ DBPedia.defaultProps = {
   triggerNextStep: undefined,
 };
 
+const theme = {
+  background: '#f5f8fb',
+  headerFontSize: '15px',
+  headerBgColor: '#f6a6b2',
+  botBubbleColor: '#f6a6b2',
+};
 
+const speech ={
+  enable : false, lang: 'fr', voice: null
+};
 
 const ExampleDBPedia = () => (
+  <ThemeProvider theme={theme}>
     <ChatBot
+    headerTitle="Hector"
+    botAvatar={avart}
+    userAvatar={user}
+    enableMobileAutoFocus={true}
+    placeholder={"Tapez le message"}
+    speechSynthesis={speech}
     steps={[
       {
         id: '1',
-        message: 'Bonjour je suis votre assistant SGMA virtuel,en quoi puis-je vous être utile',
+        message: 'Bonjour je suis votre guide Société Générale virtuel, en quoi puis-je vous être utile',
         trigger: '2',
       },
       {
         id: '2',
         options: [
           { value: 1, label: 'Ouvrir un compte', trigger: 'Accueil du client' },
-          { value: 2, label: "Trouver l'agence  SGMA la plus proche", trigger: 'agence' },
+          { value: 2, label: "Trouver l'agence  SG la plus proche", trigger: 'agence' },
         ],
       },
       {
@@ -115,7 +135,7 @@ const ExampleDBPedia = () => (
       {
         id: '3',
         component: <DBPedia />,
-        
+        asMessage: true,
         trigger: '4',
       },
       {
@@ -131,10 +151,13 @@ const ExampleDBPedia = () => (
       {
         id: 'agence',
         component: <Geoloc />,
+        asMessage: true,
         trigger: '4',
       },
     ]}
   />
+  </ThemeProvider>
+    
 );
 
 export default ExampleDBPedia;

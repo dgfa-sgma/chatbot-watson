@@ -15,6 +15,8 @@ class Geoloc extends Component {
         result: '',
         trigger: false,
         googleMap:'',
+        latitude:'',
+        longitude:''
       };
   
       this.triggetNext = this.triggetNext.bind(this);
@@ -41,6 +43,7 @@ class Geoloc extends Component {
           "long":this.props.coords.longitude
          }
       };
+
       axios.post('https://gateway-lon.watsonplatform.net/assistant/api/v1/workspaces/544c1e4a-1f3d-44f4-b48c-beae1f839741/message?version=2019-07-11', 
       body, 
       {
